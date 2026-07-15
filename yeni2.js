@@ -9,93 +9,11 @@ let lenis;
 // Miyavlama ses motoru ve yedek (fallback) kedi sesi adresi
 let meowSound = new Audio('assets/audio/meow.mp3');
 meowSound.addEventListener('error', () => {
+    // Yerel dosya bulunamazsa açık kaynaklı kedi sesini çalar
     meowSound.src = "https://www.orangefreesounds.com/wp-content/uploads/2015/01/Cat-meow-sound-effect.mp3";
 });
 
-/**
- * Admin Panelinden Girilen Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (YENİ)
- */
-/**
- * Admin Panelinden Girilen Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (GÜNCELLENDİ)
- */
-/**
- * Admin Panelinden Girilen Tüm Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (TAM GÜNCEL)
- */
-async function loadDynamicContent() {
-    try {
-        const response = await fetch('assets/data.json');
-        if (!response.ok) return;
-        const data = await response.json();
-        
-        // Slogan Elemanları
-        const heroLabel = document.querySelector('.technical-label');
-        const heroPart1 = document.querySelector('.hero-title-part1');
-        const heroGlow = document.querySelector('.text-glow');
-        const heroPart2 = document.querySelector('.hero-title-part2');
-        const heroDesc = document.querySelector('.hero-desc');
-        
-        // Hakkımızda Elemanları
-        const aboutTitle = document.querySelector('.about-summary .section-header h2');
-        const aboutDesc = document.querySelector('.about-summary .summary-text-block p');
-        
-        // Hizmetler Elemanları
-        const servicesTitle = document.querySelector('.services-summary .section-header h2');
-        const service1Title = document.querySelector('.service-card:nth-child(1) h3');
-        const service1Desc = document.querySelector('.service-card:nth-child(1) p');
-        const service2Title = document.querySelector('.service-card:nth-child(2) h3');
-        const service2Desc = document.querySelector('.service-card:nth-child(2) p');
-        const service3Title = document.querySelector('.service-card:nth-child(3) h3');
-        const service3Desc = document.querySelector('.service-card:nth-child(3) p');
-        
-        // Kazı Kazan Elemanları
-        const scratchTitle = document.querySelector('.scratch-card-info h2');
-        const scratchDesc = document.querySelector('.scratch-card-info p');
-        const scratchMessage = document.querySelector('.scratch-message');
-        
-        // İletişim Elemanları
-        const phoneElements = document.querySelectorAll('.cta-phone, .mobile-menu-footer p');
-        const emailElements = document.querySelectorAll('.cta-email');
-
-        // VERİLERİ SAYFAYA DAĞITMA VE YAZMA (DOM MAPPING)
-        if (heroLabel && data.hero_label) heroLabel.textContent = data.hero_label;
-        if (heroPart1 && data.hero_title_part1) heroPart1.textContent = data.hero_title_part1;
-        if (heroGlow && data.hero_glow_text) heroGlow.textContent = data.hero_glow_text;
-        if (heroPart2 && data.hero_title_part2) heroPart2.textContent = data.hero_title_part2;
-        if (heroDesc && data.hero_desc) heroDesc.textContent = data.hero_desc;
-        
-        if (aboutTitle && data.about_title) aboutTitle.textContent = data.about_title;
-        if (aboutDesc && data.about_desc) aboutDesc.textContent = data.about_desc;
-        
-        if (servicesTitle && data.services_title) servicesTitle.textContent = data.services_title;
-        if (service1Title && data.service1_title) service1Title.textContent = data.service1_title;
-        if (service1Desc && data.service1_desc) service1Desc.textContent = data.service1_desc;
-        if (service2Title && data.service2_title) service2Title.textContent = data.service2_title;
-        if (service2Desc && data.service2_desc) service2Desc.textContent = data.service2_desc;
-        if (service3Title && data.service3_title) service3Title.textContent = data.service3_title;
-        if (service3Desc && data.service3_desc) service3Desc.textContent = data.service3_desc;
-        
-        if (scratchTitle && data.scratch_title) scratchTitle.textContent = data.scratch_title;
-        if (scratchDesc && data.scratch_desc) scratchDesc.textContent = data.scratch_desc;
-        if (scratchMessage && data.scratch_message) scratchMessage.textContent = data.scratch_message;
-        
-        if (data.phone_number) {
-            phoneElements.forEach(el => {
-                el.textContent = data.phone_number;
-            });
-        }
-        if (data.email_address) {
-            emailElements.forEach(el => {
-                el.textContent = data.email_address;
-            });
-        }
-    } catch (err) {
-        console.log("Dinamik veriler yüklenirken hata oluştu (Lokaldeyken normaldir):", err);
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    loadDynamicContent(); // Verileri ilk sırada yükler
-    
     initSmoothScroll();
     initCustomCursor();
     initMobileMenu();
@@ -104,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initCatInteractions();
     initCinemaParallax(); 
     initHomepageMotifAnimations(); 
-    initScratchCard(); 
-    initPageSpecificEngines();
+    initScratchCard(); // Kazı kazan ana sayfada anında yüklenir
+    initPageSpecificEngines(); // Portfolyo, Blog ve İletişim özel etkileşimleri
 });
 
 /**
@@ -152,6 +70,7 @@ function initCustomCursor() {
         mouseX = e.clientX;
         mouseY = e.clientY;
         
+        // Merkez nokta anında fareyi izler
         gsap.to(dot, {
             x: mouseX,
             y: mouseY,
@@ -160,6 +79,7 @@ function initCustomCursor() {
         });
     });
 
+    // Beyaz kedi süzülerek takip eder (lerp)
     gsap.ticker.add(() => {
         const dt = 1.0 - Math.pow(1.0 - 0.15, gsap.ticker.deltaRatio());
         cursorX += (mouseX - cursorX) * dt;
@@ -171,6 +91,7 @@ function initCustomCursor() {
         });
     });
 
+    // Etkileşimli elemanlara hover olunduğunda kedi büyüme sınıfını ekler
     const interactives = document.querySelectorAll('a, button, input, textarea, .portfolio-item, .ticker-item, .matrix-card');
     interactives.forEach(item => {
         item.addEventListener('mouseenter', () => {
@@ -314,6 +235,7 @@ function triggerFluidTransition(onCompleteCallback) {
         const overlay = document.querySelector('.fluid-glitch-overlay');
         const slices = document.querySelectorAll('.fluid-slice');
         
+        // Eğer dom elemanı bulunamazsa sarsıntısız akış için callback'i anında çalıştır
         if (!overlay || !slices || slices.length === 0) {
             onCompleteCallback();
             return;
@@ -406,6 +328,7 @@ function initCatInteractions() {
                         openAboutCinema();
                     });
                 } else {
+                    // Normal sayfalarda sıvı geçişi bittiğinde acil durum sayacını temizleyip yönlendir
                     triggerFluidTransition(() => {
                         clearTimeout(redirectTimeout);
                         forceRedirect();
@@ -659,7 +582,7 @@ function closeCinemaReel() {
 }
 
 /**
- * ANA SAYFA DİNAMİK 3D MOTİF ANİMASYONLARI
+ * ANA SAYFA DİNAMİK 3D MOTİF ANİMASYONLARI VE LİMİTSİZ PARALLAKS ETKİLERİ (GÜNCELLENDİ)
  */
 function initHomepageMotifAnimations() {
     const heroSection = document.querySelector('.hero-section');
@@ -693,6 +616,7 @@ function initHomepageMotifAnimations() {
             });
         });
 
+        // 3D SPIN ETKİSİ: Aşağı kaydırdıkça kendi ekseninde ve z-ekseninde spin atar
         gsap.to(heroMotif, {
             scrollTrigger: {
                 trigger: ".hero-section",
@@ -700,12 +624,14 @@ function initHomepageMotifAnimations() {
                 end: "bottom top",
                 scrub: true
             },
-            rotationZ: 140,
-            y: 80,
+            rotationZ: 360,
+            y: 120,
+            scale: 1.1,
             ease: "none"
         });
     }
 
+    // PERDE AÇILIŞ ETKİSİ (Tezhip Köşeliği - Aşağı kaydırdıkça sağa doğru bir sahne perdesi gibi kayar)
     const aboutSummaryMotif = document.querySelector('.about-summary .section-motif');
     if (aboutSummaryMotif) {
         gsap.to(aboutSummaryMotif, {
@@ -715,13 +641,13 @@ function initHomepageMotifAnimations() {
                 end: "bottom top",
                 scrub: true
             },
-            y: -140,
-            scale: 1.15,
-            rotationY: 35, 
+            x: 200, // Perde şeklinde sağa doğru açılır
+            opacity: 0, // Aşağı indikçe pürüzsüzce kaybolur
             ease: "none"
         });
     }
 
+    // MORFOLOJİK GEÇİŞ EFEKTİ (Hizmetlerdeki Bozkurt kilim motifi, portfolyoda pürüzsüzce Teal-Gold Madalyona dönüşür)
     const servicesMotif = document.querySelector('.services-summary .section-motif');
     if (servicesMotif) {
         gsap.to(servicesMotif, {
@@ -731,9 +657,8 @@ function initHomepageMotifAnimations() {
                 end: "bottom top",
                 scrub: true
             },
-            rotationZ: 360, 
-            rotationX: 140, 
-            y: -100,
+            opacity: 0, // Hizmetlerden aşağı indikçe solar
+            scale: 0.8,
             ease: "none"
         });
     }
@@ -747,9 +672,9 @@ function initHomepageMotifAnimations() {
                 end: "bottom top",
                 scrub: true
             },
-            x: 130, 
-            skewX: -20, 
-            rotationY: -45, 
+            opacity: 0.22, // Portfolyoya indikçe parlar (morf geçişi simüle eder)
+            scale: 1.1,
+            rotationZ: 90,
             ease: "none"
         });
     }
@@ -889,4 +814,79 @@ function initPageSpecificEngines() {
             });
         });
     });
+}
+
+/**
+ * Admin Panelinden Girilen Tüm Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (TAM GÜNCEL)
+ */
+async function loadDynamicContent() {
+    try {
+        const response = await fetch('assets/data.json');
+        if (!response.ok) return;
+        const data = await response.json();
+        
+        // Slogan Elemanları
+        const heroLabel = document.querySelector('.technical-label');
+        const heroPart1 = document.querySelector('.hero-title-part1');
+        const heroGlow = document.querySelector('.text-glow');
+        const heroPart2 = document.querySelector('.hero-title-part2');
+        const heroDesc = document.querySelector('.hero-desc');
+        
+        // Hakkımızda Elemanları
+        const aboutTitle = document.querySelector('.about-summary .section-header h2');
+        const aboutDesc = document.querySelector('.about-summary .summary-text-block p');
+        
+        // Hizmetler Elemanları
+        const servicesTitle = document.querySelector('.services-summary .section-header h2');
+        const service1Title = document.querySelector('.service-card:nth-child(1) h3');
+        const service1Desc = document.querySelector('.service-card:nth-child(1) p');
+        const service2Title = document.querySelector('.service-card:nth-child(2) h3');
+        const service2Desc = document.querySelector('.service-card:nth-child(2) p');
+        const service3Title = document.querySelector('.service-card:nth-child(3) h3');
+        const service3Desc = document.querySelector('.service-card:nth-child(3) p');
+        
+        // Kazı Kazan Elemanları
+        const scratchTitle = document.querySelector('.scratch-card-info h2');
+        const scratchDesc = document.querySelector('.scratch-card-info p');
+        const scratchMessage = document.querySelector('.scratch-message');
+        
+        // İletişim Elemanları
+        const phoneElements = document.querySelectorAll('.cta-phone, .mobile-menu-footer p');
+        const emailElements = document.querySelectorAll('.cta-email');
+
+        // VERİLERİ SAYFAYA DAĞITMA VE YAZMA (DOM MAPPING)
+        if (heroLabel && data.hero_label) heroLabel.textContent = data.hero_label;
+        if (heroPart1 && data.hero_title_part1) heroPart1.textContent = data.hero_title_part1;
+        if (heroGlow && data.hero_glow_text) heroGlow.textContent = data.hero_glow_text;
+        if (heroPart2 && data.hero_title_part2) heroPart2.textContent = data.hero_title_part2;
+        if (heroDesc && data.hero_desc) heroDesc.textContent = data.hero_desc;
+        
+        if (aboutTitle && data.about_title) aboutTitle.textContent = data.about_title;
+        if (aboutDesc && data.about_desc) aboutDesc.textContent = data.about_desc;
+        
+        if (servicesTitle && data.services_title) servicesTitle.textContent = data.services_title;
+        if (service1Title && data.service1_title) service1Title.textContent = data.service1_title;
+        if (service1Desc && data.service1_desc) service1Desc.textContent = data.service1_desc;
+        if (service2Title && data.service2_title) service2Title.textContent = data.service2_title;
+        if (service2Desc && data.service2_desc) service2Desc.textContent = data.service2_desc;
+        if (service3Title && data.service3_title) service3Title.textContent = data.service3_title;
+        if (service3Desc && data.service3_desc) service3Desc.textContent = data.service3_desc;
+        
+        if (scratchTitle && data.scratch_title) scratchTitle.textContent = data.scratch_title;
+        if (scratchDesc && data.scratch_desc) scratchDesc.textContent = data.scratch_desc;
+        if (scratchMessage && data.scratch_message) scratchMessage.textContent = data.scratch_message;
+        
+        if (data.phone_number) {
+            phoneElements.forEach(el => {
+                el.textContent = data.phone_number;
+            });
+        }
+        if (data.email_address) {
+            emailElements.forEach(el => {
+                el.textContent = data.email_address;
+            });
+        }
+    } catch (err) {
+        console.log("Dinamik veriler yüklenirken hata oluştu (Lokaldeyken normaldir):", err);
+    }
 }
