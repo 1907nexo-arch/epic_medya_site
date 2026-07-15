@@ -4,6 +4,7 @@
  * ==========================================================================
  */
 
+// Lenis smooth scroll örneğini globalde tanımlıyoruz
 let lenis;
 
 // Miyavlama ses motoru ve yedek (fallback) kedi sesi adresi
@@ -14,6 +15,8 @@ meowSound.addEventListener('error', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadDynamicContent(); // Verileri ilk sırada yükler
+    
     initSmoothScroll();
     initCustomCursor();
     initMobileMenu();
@@ -24,7 +27,84 @@ document.addEventListener('DOMContentLoaded', () => {
     initHomepageMotifAnimations(); 
     initScratchCard(); // Kazı kazan ana sayfada anında yüklenir
     initPageSpecificEngines(); // Portfolyo, Blog ve İletişim özel etkileşimleri
+    
+    initAntiTheftProtection(); // Gelişmiş siber-güvenlik ve eklenti kalkanı
 });
+
+/**
+ * Admin Panelinden Girilen Tüm Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (TAM GÜNCEL)
+ */
+async function loadDynamicContent() {
+    try {
+        const response = await fetch('assets/data.json');
+        if (!response.ok) return;
+        const data = await response.json();
+        
+        // Slogan Elemanları
+        const heroLabel = document.querySelector('.technical-label');
+        const heroPart1 = document.querySelector('.hero-title-part1');
+        const heroGlow = document.querySelector('.text-glow');
+        const heroPart2 = document.querySelector('.hero-title-part2');
+        const heroDesc = document.querySelector('.hero-desc');
+        
+        // Hakkımızda Elemanları
+        const aboutTitle = document.querySelector('.about-summary .section-header h2');
+        const aboutDesc = document.querySelector('.about-summary .summary-text-block p');
+        
+        // Hizmetler Elemanları
+        const servicesTitle = document.querySelector('.services-summary .section-header h2');
+        const service1Title = document.querySelector('.service-card:nth-child(1) h3');
+        const service1Desc = document.querySelector('.service-card:nth-child(1) p');
+        const service2Title = document.querySelector('.service-card:nth-child(2) h3');
+        const service2Desc = document.querySelector('.service-card:nth-child(2) p');
+        const service3Title = document.querySelector('.service-card:nth-child(3) h3');
+        const service3Desc = document.querySelector('.service-card:nth-child(3) p');
+        
+        // Kazı Kazan Elemanları
+        const scratchTitle = document.querySelector('.scratch-card-info h2');
+        const scratchDesc = document.querySelector('.scratch-card-info p');
+        const scratchMessage = document.querySelector('.scratch-message');
+        
+        // İletişim Elemanları
+        const phoneElements = document.querySelectorAll('.cta-phone, .mobile-menu-footer p');
+        const emailElements = document.querySelectorAll('.cta-email');
+
+        // VERİLERİ SAYFAYA DAĞITMA VE YAZMA (DOM MAPPING)
+        if (heroLabel && data.hero_label) heroLabel.textContent = data.hero_label;
+        if (heroPart1 && data.hero_title_part1) heroPart1.textContent = data.hero_title_part1;
+        if (heroGlow && data.hero_glow_text) heroGlow.textContent = data.hero_glow_text;
+        if (heroPart2 && data.hero_title_part2) heroPart2.textContent = data.hero_title_part2;
+        if (heroDesc && data.hero_desc) heroDesc.textContent = data.hero_desc;
+        
+        if (aboutTitle && data.about_title) aboutTitle.textContent = data.about_title;
+        if (aboutDesc && data.about_desc) aboutDesc.textContent = data.about_desc;
+        
+        if (servicesTitle && data.services_title) servicesTitle.textContent = data.services_title;
+        if (service1Title && data.service1_title) service1Title.textContent = data.service1_title;
+        if (service1Desc && data.service1_desc) service1Desc.textContent = data.service1_desc;
+        if (service2Title && data.service2_title) service2Title.textContent = data.service2_title;
+        if (service2Desc && data.service2_desc) service2Desc.textContent = data.service2_desc;
+        if (service3Title && data.service3_title) service3Title.textContent = data.service3_title;
+        if (service3Desc && data.service3_desc) service3Desc.textContent = data.service3_desc;
+        
+        if (scratchTitle && data.scratch_title) scratchTitle.textContent = data.scratch_title;
+        if (scratchDesc && data.scratch_desc) scratchDesc.textContent = data.scratch_desc;
+        if (scratchMessage && data.scratch_message) scratchMessage.textContent = data.scratch_message;
+        
+        if (data.phone_number) {
+            phoneElements.forEach(el => {
+                el.textContent = data.phone_number;
+            });
+        }
+        if (data.email_address) {
+            emailElements.forEach(el => {
+                el.textContent = data.email_address;
+            });
+        }
+    } catch (err) {
+        console.log("Dinamik veriler yüklenirken hata oluştu (Lokaldeyken normaldir):", err);
+    }
+}
 
 /**
  * Lenis Smooth Scroll Altyapısı
@@ -814,6 +894,69 @@ function initPageSpecificEngines() {
             });
         });
     });
+}
+
+/**
+ * Gelişmiş Siber-Güvenlik ve Eklenti Engelleme Duvarı (Anti-Extension Protection)
+ */
+function initAntiTheftProtection() {
+    // 1. Sağ Tık (Context Menu) Engelleme
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+
+    // 2. F12 ve Diğer İnceleme Kısayollarını Engelleme
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.key === 'u') {
+            e.preventDefault();
+        }
+    });
+
+    // 3. Eklenti Ters Köşe Kalkanı (Fare Fiziksel Sağ Tuş Kilidi - YENİ)
+    // Eklentiler 'contextmenu' olayını bypass etse bile, fiziksel tıklama anında ekranı kilitleyen görünmez perde sereriz.
+    document.addEventListener('mousedown', (e) => {
+        if (e.button === 2) { // 2 = Fiziksel fare sağ tuşu
+            e.preventDefault();
+            
+            // Ekranı kaplayan geçici, görünmez bir tıklama yutucu kalkan oluştururuz
+            let shield = document.createElement('div');
+            shield.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99999; background:transparent; pointer-events:auto;';
+            document.body.appendChild(shield);
+            
+            // Sağ tık bittikten hemen sonra kalkanı yok ederiz (kullanıcı hissetmez bile)
+            setTimeout(() => {
+                if (shield) shield.remove();
+            }, 1000);
+        }
+    });
+
+    // 4. Resim Sürükleme ve Hırsızlığı Engelleme
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.nodeName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    // 5. Eklenti Sızıntı Kontrolü (Native Code Check - YENİ)
+    // Eğer bir eklenti tarayıcının engelleme fonksiyonunu bozarsa, güvenlik için siteyi anında karartırız.
+    setInterval(() => {
+        const isNative = Event.prototype.preventDefault.toString().includes("[native code]");
+        if (!isNative) {
+            document.body.style.display = 'none'; // Sızma algılanırsa siteyi anında gizle
+            alert("Sistem uyarısı: Güvensiz tarayıcı eklentisi algılandı. Lütfen eklentilerinizi kapatıp sayfayı yenileyin.");
+        }
+    }, 1000);
+
+    // 6. Konsol Açılırsa Kodu Donduran Debugger Döngüsü
+    setInterval(() => {
+        debugger;
+    }, 100);
 }
 
 /**
