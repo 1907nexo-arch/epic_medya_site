@@ -15,35 +15,37 @@ meowSound.addEventListener('error', () => {
 /**
  * Admin Panelinden Girilen Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (YENİ)
  */
+/**
+ * Admin Panelinden Girilen Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (GÜNCELLENDİ)
+ */
 async function loadDynamicContent() {
     try {
-        // assets klasöründeki JSON veri dosyasını okuyoruz
         const response = await fetch('assets/data.json');
         if (!response.ok) return;
         const data = await response.json();
         
-        // HTML üzerindeki ilgili sınıfları (class) buluyoruz
         const heroLabel = document.querySelector('.technical-label');
         const heroGlow = document.querySelector('.text-glow');
         const heroDesc = document.querySelector('.hero-desc');
-        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-        const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+        
+        // HTML üzerindeki paragraf (<p>) etiketlerinizi hedefleyen güncel seçiciler
+        const phoneElements = document.querySelectorAll('.cta-phone, .mobile-menu-footer p');
+        const emailElements = document.querySelectorAll('.cta-email');
 
-        // Eğer veriler boş değilse sayfadaki metinleri anlık güncelliyoruz
         if (heroLabel && data.hero_label) heroLabel.textContent = data.hero_label;
         if (heroGlow && data.hero_glow_text) heroGlow.textContent = data.hero_glow_text;
         if (heroDesc && data.hero_desc) heroDesc.textContent = data.hero_desc;
         
+        // Telefon numarasını sayfadaki tüm ilgili alanlarda günceller
         if (data.phone_number) {
-            phoneLinks.forEach(link => {
-                link.textContent = data.phone_number;
-                link.setAttribute('href', `tel:${data.phone_number.replace(/\D/g, "")}`);
+            phoneElements.forEach(el => {
+                el.textContent = data.phone_number;
             });
         }
+        // E-posta adresini sayfadaki tüm ilgili alanlarda günceller
         if (data.email_address) {
-            emailLinks.forEach(link => {
-                link.textContent = data.email_address;
-                link.setAttribute('href', `mailto:${data.email_address}`);
+            emailElements.forEach(el => {
+                el.textContent = data.email_address;
             });
         }
     } catch (err) {
