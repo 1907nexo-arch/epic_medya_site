@@ -1,7 +1,21 @@
 {
   "hero_label": "EST. 2018 // MEDIA ART",
+  "hero_title_part1": "sadece",
   "hero_glow_text": "fikir değil,",
+  "hero_title_part2": "değer üretiyoruz.",
   "hero_desc": "Fikirlerin sanata, kodun deneyime dönüştüğü yerdesiniz. Epic Medya olarak, markanızın karakterini geleceğin dijital dünyasına taşıyor ve hedef kitlenizle arasında sarsılmaz, interaktif bağlar kuruyoruz.",
+  "about_title": "Sıradanlığı Reddeden Markalar İçin Yaratıcı Çözümler",
+  "about_desc": "Alışılagelmiş reklam şablonlarını bir kenara bırakıyor, markanızın hikayesini zihinlerde iz bırakan yaratıcı kampanyalar, çarpıcı grafik tasarımlar ve hedef odaklı dijital stratejilerle anlatıyoruz.",
+  "services_title": "Hizmet Alanlarımız",
+  "service1_title": "Kreatif Tasarım & Marka Kimliği",
+  "service1_desc": "Yeni nesil estetik anlayışıyla markanızın DNA'sını oluşturuyoruz. Özgün logo tasarımlarından dijital sanata, kurumsal kimlikten ambalaj tasarımına kadar her noktada benzersiz görsel diller kurguluyoruz.",
+  "service2_title": "İnteraktif Web & Yaratıcı Teknoloji",
+  "service2_desc": "Tarayıcı sınırlarını altüst eden interaktif web deneyimleri inşa ediyoruz. Sitenizi sadece bir bilgi panosu olmaktan çıkarıp, ziyaretçiyi içine çeken, yaşayan ve etkileşimi yüksek bir marka vizyonuna dönüştürüyoruz.",
+  "service3_title": "Stratejik Reklam & Dijital Pazarlama",
+  "service3_desc": "Markanızın sesini doğru kitleye, en etkileyici şekilde ulaştırıyoruz. Sosyal medya yönetiminden kreatif reklam kampanyalarına kadar her adımda ölçülebilir başarı ve gerçek değer üretiyoruz.",
+  "scratch_title": "Sizin İçin Bir Sürprizimiz Var",
+  "scratch_desc": "Sıradan dijital ajansların tekdüze kalıplarından sıkıldıysanız, Epic Medya'nın etkileşim gücünü keşfedin. Sağdaki alüminyum/altın yaldızlı siber kartı imlecinizle kazıyarak sizin için sakladığımız özel mesajı ortaya çıkarın.",
+  "scratch_message": "Sizi gördüğümüz için çok mutluyuz! Alacağınız hizmet için en doğru yerdesiniz. 🖤",
   "phone_number": "+90 (543) 625 01 56",
   "email_address": "epicmedia@info.com"
 }
