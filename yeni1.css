@@ -1,0 +1,50 @@
+/* ==========================================================================
+   CSS TASARIM DEĞİŞKENLERİ (VARIABLES)
+   ========================================================================== */
+
+:root {
+    /* Renk Skalası (Active Theory Tarzı Koyu Tema & Siber Vurgular) */
+    --color-bg-primary: #080808;
+    --color-bg-secondary: #121212;
+    --color-border: rgba(255, 255, 255, 0.06);
+    --color-border-hover: rgba(255, 255, 255, 0.2);
+    
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #909090;
+    --color-text-muted: #505050;
+    
+    --color-accent: #00ff66;          /* Neon Yeşil */
+    --color-accent-blue: #00e5ff;     /* Neon Mavi */
+    --color-error: #ff3838;
+
+    /* Yazı Tipleri */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Yazı Boyutları */
+    --font-size-hero: clamp(2.8rem, 7vw, 7.5rem);
+    --font-size-h1: clamp(2.2rem, 5vw, 4.2rem);
+    --font-size-h2: clamp(1.8rem, 3.5vw, 2.8rem);
+    --font-size-h3: clamp(1.4rem, 2.5vw, 1.8rem);
+    --font-size-body: clamp(0.95rem, 1.1vw, 1.1rem);
+    --font-size-small: clamp(0.75rem, 0.9vw, 0.85rem);
+
+    /* Izgara ve Düzen Ölçüleri */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
+    --container-max-width: 1520px;
+
+    /* Sınır Ovalliği ve Gölgeler */
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-full: 9999px;
+    --shadow-premium: 0 15px 50px rgba(0, 0, 0, 0.6);
+
+    /* Geçiş Efektleri */
+    --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-smooth: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}

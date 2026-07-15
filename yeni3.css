@@ -1,0 +1,112 @@
+/* ==========================================================================
+   TÜM EKRAN ÇÖZÜNÜRLÜKLERİNE UYUMLULUK (RESPONSIVE)
+   ========================================================================== */
+
+/* 1920px (Ultra Geniş Ekranlar) */
+@media (min-width: 1920px) {
+    :root {
+        --container-max-width: 1720px;
+    }
+}
+
+/* 1600px (Geniş Masaüstü) */
+@media (max-width: 1600px) {
+    :root {
+        --container-max-width: 1440px;
+    }
+}
+
+/* 1440px (Standart Masaüstü / Laptop) */
+@media (max-width: 1440px) {
+    :root {
+        --container-max-width: 1280px;
+    }
+}
+
+/* 1366px (Masaüstü Orta Çözünürlük) */
+@media (max-width: 1366px) {
+    :root {
+        --container-max-width: 1200px;
+    }
+}
+
+/* 1280px (Küçük Ekran Laptop) */
+@media (max-width: 1280px) {
+    :root {
+        --container-max-width: 1100px;
+    }
+}
+
+/* 1024px (Yatay Tabletler) */
+@media (max-width: 1024px) {
+    :root {
+        --container-max-width: 960px;
+    }
+    .grid-overlay {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-overlay-line:last-child {
+        display: none;
+    }
+}
+
+/* 992px (Dikey Tabletler / Küçük Ekranlar) */
+@media (max-width: 992px) {
+    .nav-links {
+        display: none; /* Masaüstü menüsünü gizle */
+    }
+    .menu-toggle {
+        display: flex; /* Hamburger butonu aktif */
+    }
+    .grid-layout-2, .grid-layout-3, .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    .footer-top {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    .footer-links {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* 768px (Büyük Telefonlar) */
+@media (max-width: 768px) {
+    :root {
+        --spacing-xl: 4rem;
+        --spacing-lg: 2.5rem;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* 576px (Standart Telefonlar) */
+@media (max-width: 576px) {
+    .grid-overlay {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-overlay-line:nth-child(3) {
+        display: none;
+    }
+}
+
+/* 390px - 360px - 320px (Mikro / Katlanabilir Telefon Ekranları) */
+@media (max-width: 390px) {
+    :root {
+        --font-size-hero: 2.4rem;
+    }
+    .navbar {
+        height: 70px;
+    }
+    .hero-section {
+        padding-top: 100px;
+    }
+    .cta-email {
+        font-size: 1.2rem;
+    }
+}
