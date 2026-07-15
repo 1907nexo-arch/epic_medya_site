@@ -18,31 +18,71 @@ meowSound.addEventListener('error', () => {
 /**
  * Admin Panelinden Girilen Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (GÜNCELLENDİ)
  */
+/**
+ * Admin Panelinden Girilen Tüm Dinamik Verileri Çekme ve Sayfaya Yazma Motoru (TAM GÜNCEL)
+ */
 async function loadDynamicContent() {
     try {
         const response = await fetch('assets/data.json');
         if (!response.ok) return;
         const data = await response.json();
         
+        // Slogan Elemanları
         const heroLabel = document.querySelector('.technical-label');
+        const heroPart1 = document.querySelector('.hero-title-part1');
         const heroGlow = document.querySelector('.text-glow');
+        const heroPart2 = document.querySelector('.hero-title-part2');
         const heroDesc = document.querySelector('.hero-desc');
         
-        // HTML üzerindeki paragraf (<p>) etiketlerinizi hedefleyen güncel seçiciler
+        // Hakkımızda Elemanları
+        const aboutTitle = document.querySelector('.about-summary .section-header h2');
+        const aboutDesc = document.querySelector('.about-summary .summary-text-block p');
+        
+        // Hizmetler Elemanları
+        const servicesTitle = document.querySelector('.services-summary .section-header h2');
+        const service1Title = document.querySelector('.service-card:nth-child(1) h3');
+        const service1Desc = document.querySelector('.service-card:nth-child(1) p');
+        const service2Title = document.querySelector('.service-card:nth-child(2) h3');
+        const service2Desc = document.querySelector('.service-card:nth-child(2) p');
+        const service3Title = document.querySelector('.service-card:nth-child(3) h3');
+        const service3Desc = document.querySelector('.service-card:nth-child(3) p');
+        
+        // Kazı Kazan Elemanları
+        const scratchTitle = document.querySelector('.scratch-card-info h2');
+        const scratchDesc = document.querySelector('.scratch-card-info p');
+        const scratchMessage = document.querySelector('.scratch-message');
+        
+        // İletişim Elemanları
         const phoneElements = document.querySelectorAll('.cta-phone, .mobile-menu-footer p');
         const emailElements = document.querySelectorAll('.cta-email');
 
+        // VERİLERİ SAYFAYA DAĞITMA VE YAZMA (DOM MAPPING)
         if (heroLabel && data.hero_label) heroLabel.textContent = data.hero_label;
+        if (heroPart1 && data.hero_title_part1) heroPart1.textContent = data.hero_title_part1;
         if (heroGlow && data.hero_glow_text) heroGlow.textContent = data.hero_glow_text;
+        if (heroPart2 && data.hero_title_part2) heroPart2.textContent = data.hero_title_part2;
         if (heroDesc && data.hero_desc) heroDesc.textContent = data.hero_desc;
         
-        // Telefon numarasını sayfadaki tüm ilgili alanlarda günceller
+        if (aboutTitle && data.about_title) aboutTitle.textContent = data.about_title;
+        if (aboutDesc && data.about_desc) aboutDesc.textContent = data.about_desc;
+        
+        if (servicesTitle && data.services_title) servicesTitle.textContent = data.services_title;
+        if (service1Title && data.service1_title) service1Title.textContent = data.service1_title;
+        if (service1Desc && data.service1_desc) service1Desc.textContent = data.service1_desc;
+        if (service2Title && data.service2_title) service2Title.textContent = data.service2_title;
+        if (service2Desc && data.service2_desc) service2Desc.textContent = data.service2_desc;
+        if (service3Title && data.service3_title) service3Title.textContent = data.service3_title;
+        if (service3Desc && data.service3_desc) service3Desc.textContent = data.service3_desc;
+        
+        if (scratchTitle && data.scratch_title) scratchTitle.textContent = data.scratch_title;
+        if (scratchDesc && data.scratch_desc) scratchDesc.textContent = data.scratch_desc;
+        if (scratchMessage && data.scratch_message) scratchMessage.textContent = data.scratch_message;
+        
         if (data.phone_number) {
             phoneElements.forEach(el => {
                 el.textContent = data.phone_number;
             });
         }
-        // E-posta adresini sayfadaki tüm ilgili alanlarda günceller
         if (data.email_address) {
             emailElements.forEach(el => {
                 el.textContent = data.email_address;
